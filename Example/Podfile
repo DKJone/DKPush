@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DKPush_Example' do
+  pod 'DKPush', :path => '../'
+
+  target 'DKPush_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
