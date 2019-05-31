@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DKPush'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'JPush Swift Api.'
 
   s.homepage         = 'https://github.com/DKJone/DKPush'
