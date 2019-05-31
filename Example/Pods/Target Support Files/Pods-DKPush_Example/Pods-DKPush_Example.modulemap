@@ -1,0 +1,6 @@
+framework module Pods_DKPush_Example {
+  umbrella header "Pods-DKPush_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

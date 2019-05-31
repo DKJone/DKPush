@@ -1,0 +1,16 @@
+PODS:
+  - DKPush (0.1.0)
+
+DEPENDENCIES:
+  - DKPush (from `../`)
+
+EXTERNAL SOURCES:
+  DKPush:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  DKPush: bcc7e1108cc60eca564d0dfb369a522d969df84e
+
+PODFILE CHECKSUM: e7700d9c764e0b5805b2fe68fd669f83b786f31b
+
+COCOAPODS: 1.6.1

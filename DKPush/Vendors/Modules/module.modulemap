@@ -1,0 +1,6 @@
+framework module JPush {
+    umbrella header "JPUSHService.h"
+    export *
+    link "z"
+    link "resolv"
+}

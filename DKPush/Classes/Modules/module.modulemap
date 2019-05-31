@@ -1,0 +1,8 @@
+framework module Verify {
+  umbrella header "DKPush.h"
+  export *
+  link "z"
+  link "resolv"
+  link "jcore"
+  link "jpush"
+}

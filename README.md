@@ -1,9 +1,6 @@
 # DKPush
 
-[![CI Status](https://img.shields.io/travis/DKJone/DKPush.svg?style=flat)](https://travis-ci.org/DKJone/DKPush)
-[![Version](https://img.shields.io/cocoapods/v/DKPush.svg?style=flat)](https://cocoapods.org/pods/DKPush)
-[![License](https://img.shields.io/cocoapods/l/DKPush.svg?style=flat)](https://cocoapods.org/pods/DKPush)
-[![Platform](https://img.shields.io/cocoapods/p/DKPush.svg?style=flat)](https://cocoapods.org/pods/DKPush)
+![](https://img.shields.io/badge/support-iOS%2011%2B%20-blue.svg?style=flat)  ![](https://img.shields.io/badge/language-Swift5-green.svg)  ![](https://img.shields.io/badge/support-cocoapods-yellow.svg) ![](https://img.shields.io/badge/support-OC-orange.svg)
 
 ## Example
 
@@ -17,7 +14,7 @@ DKPush is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'DKPush'
+pod 'DKPush' , git: 'https://github.com/DKJone/DKPush.git' 
 ```
 
 ## Author

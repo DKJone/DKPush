@@ -1,0 +1,6 @@
+framework module DKPush {
+  umbrella header "DKPush-umbrella.h"
+
+  export *
+  module * { export * }
+}

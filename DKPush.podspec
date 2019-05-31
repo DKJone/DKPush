@@ -9,34 +9,46 @@
 Pod::Spec.new do |s|
   s.name             = 'DKPush'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of DKPush.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.summary          = 'JPush Swift Api.'
 
   s.homepage         = 'https://github.com/DKJone/DKPush'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'DKJone' => 'zdk@sinoroad.com' }
+  s.author           = {  'dkjone' => '1136165636@qq.com' }
   s.source           = { :git => 'https://github.com/DKJone/DKPush.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '8.0'
-
-  s.source_files = 'DKPush/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'DKPush' => ['DKPush/Assets/*.png']
-  # }
+  s.ios.deployment_target = '11.0'
+  s.source_files = 'DKPush/Classes/**/*', 'DKPush/Vendors/**.h'
+  s.public_header_files = 'DKPush/Vendors/*.h'
+  s.frameworks   =  'UIKit', 'CFNetwork', 'OpenGLES', 'CoreTelephony', 'SystemConfiguration', 'CoreGraphics', 'Foundation','Security' ,'UserNotifications'
+  
+  s.libraries = 'z','resolv'
+  s.vendored_libraries = 'DKPush/Vendors/thirdlibs/*.a'
+  s.preserve_paths = 'DKPush/Vendors/thirdlibs/*.a'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.pod_target_xcconfig = {
+      'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/DKPush/Vendors/',
+      'LD_RUNPATH_SEARCH_PATHS' => '$(PODS_ROOT)/DKPush/Vendors/',
+      'OTHER_LDFLAGS' => '-all_load' 
+  }
+
+  s.prepare_command = <<-EOF
+
+  # 业务Module
+  rm -rf DKPush/Classes/Modules
+  mkdir DKPush/Classes/Modules
+  touch DKPush/Classes/Modules/module.modulemap
+  cat <<-EOF > DKPush/Classes/Modules/module.modulemap
+  framework module Verify {
+    umbrella header "DKPush.h"
+    export *
+    link "z"
+    link "resolv"
+    link "jcore"
+    link "jpush"
+  }
+  \EOF
+
+  EOF
+
+
 end

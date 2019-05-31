@@ -1,0 +1,48 @@
+{
+  "name": "DKPush",
+  "version": "0.1.0",
+  "summary": "JPush Swift Api.",
+  "homepage": "https://github.com/DKJone/DKPush",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "dkjone": "1136165636@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/DKJone/DKPush.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source_files": [
+    "DKPush/Classes/**/*",
+    "DKPush/Vendors/**.h"
+  ],
+  "public_header_files": "DKPush/Vendors/*.h",
+  "frameworks": [
+    "UIKit",
+    "CFNetwork",
+    "OpenGLES",
+    "CoreTelephony",
+    "SystemConfiguration",
+    "CoreGraphics",
+    "Foundation",
+    "Security",
+    "UserNotifications"
+  ],
+  "libraries": [
+    "z",
+    "resolv"
+  ],
+  "vendored_libraries": "DKPush/Vendors/thirdlibs/*.a",
+  "preserve_paths": "DKPush/Vendors/thirdlibs/*.a",
+  "pod_target_xcconfig": {
+    "HEADER_SEARCH_PATHS": "$(PODS_ROOT)/DKPush/Vendors/",
+    "LD_RUNPATH_SEARCH_PATHS": "$(PODS_ROOT)/DKPush/Vendors/",
+    "OTHER_LDFLAGS": "-all_load"
+  },
+  "prepare_command": "# 业务Module\nrm -rf DKPush/Classes/Modules\nmkdir DKPush/Classes/Modules\ntouch DKPush/Classes/Modules/module.modulemap\ncat <<-EOF > DKPush/Classes/Modules/module.modulemap\nframework module Verify {\n  umbrella header \"DKPush.h\"\n  export *\n  link \"z\"\n  link \"resolv\"\n  link \"jcore\"\n  link \"jpush\"\n}\nEOF"
+}

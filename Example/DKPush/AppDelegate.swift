@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import DKPush
+import UserNotifications
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+            let entity = JPUSHRegisterEntity()
+            entity.types = Int(JPAuthorizationOptions.alert.rawValue | JPAuthorizationOptions.badge.rawValue | JPAuthorizationOptions.sound.rawValue)
+        JPUSHService.register(forRemoteNotificationConfig: entity, delegate: self)
+
+
+        JPUSHService.setup(withOption: launchOptions, appKey: "ce0ff975805dc9e282b7376c", channel: "Development", apsForProduction: false)
+
+            JPUSHService.registrationIDCompletionHandler { _, registrationID in
+                if let registrationID = registrationID {
+                    UserDefaults.standard.set(registrationID, forKey: "registrationID")
+                }
+            }
+
+
         return true
     }
 
@@ -40,7 +55,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("++++++----" + (String(data: deviceToken, encoding: .utf8) ?? ""))
+        JPUSHService.registerDeviceToken(deviceToken)
+    }
 
+}
+
+extension AppDelegate:JPUSHRegisterDelegate{
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, didReceive response: UNNotificationResponse!, withCompletionHandler completionHandler: (() -> Void)!) {
+        let userInfo = response.notification.request.content.userInfo
+        if response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false {
+            JPUSHService.handleRemoteNotification(userInfo)
+            handleRemoteNotification(userInfo)
+
+        }
+
+        if let extra = userInfo["application"] as? String {
+            if extra == "mall" {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                }
+            }
+        }
+        completionHandler()
+    }
+
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, openSettingsFor notification: UNNotification?) {
+
+    }
+
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
+        let userInfo = notification.request.content.userInfo
+        if notification.request.trigger?.isKind(of: JPushNotificationTrigger.self) ?? false {
+            JPUSHService.handleRemoteNotification(userInfo)
+            handleRemoteNotification(userInfo)
+        }
+
+        // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+        completionHandler(Int(UNNotificationPresentationOptions.alert.rawValue))
+    }
+
+
+
+    /// 推送处理
+    ///
+    /// - Parameter userInfo: 推送的附加信息
+    func handleRemoteNotification(_ userInfo: [AnyHashable: Any]) {
+        JPUSHService.setBadge(0)
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
 
 }
 
